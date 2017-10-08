@@ -98,3 +98,9 @@ optional arguments:
                         the number of tweets that you want to collect
 
 ```
+
+## Some pre processing in Java code
+use the java file inside Rad Arabic File corpus for
+Reading the txt file
+process the Repeated characters
+Normalize the .txt file
