@@ -1,0 +1,44 @@
+
+#collect_hashtags
+python query_tweets.py  -k hashtags_pal.txt -o outtweets.json -n 1000
+
+#jordan
+python stream_geolocation.py  -l 35.5902,29.9288,36.969,32.2802 -j locationJordan -n 9999
+nohup python stream_geolocation.py  -l 35.5518,32.0564,36.0461,32.7301,35.5957,29.9692,36.8591,32.2918,34.9654,29.3642,35.9679,29.5747 -j locationJordan -n 9999
+nohup python stream_geolocation.py  -l 35.2373,29.7712,36.2398,30.6075 -j locationJordan -n 9999
+python stream_users.py  -u jor_users_id.txt -j usersJor.json -n 9999  #users
+
+
+#labanon
+python stream_geolocation.py  -l 35.3691,33.4612,35.9541,34.6309 -j locationLebanon -n 9999
+nohup python stream_users.py  -u leb_users_id2.txt -j usersLeb.json -n 9999  #users
+
+
+#Palestine
+python stream_geolocation.py  -l 34.390297,31.474353,34.485741,31.56157 -j locationGaza -n 9999
+python stream_geolocation.py  -l 34.986,31.7924,35.5463,32.5364 -j locationWestbank -n 9999
+nohup python stream_users.py  -u pal_users_id.txt -j usersPal.json -n 9999    #users
+python stream_geolocation.py  -l 34.222412,31.234527,34.571228,31.585555,34.7882,31.2668,35.5353,32.5697 -j locationPalestine -n 9999
+
+
+#syria
+nohup python stream_users.py  -u syr_users_id.txt -j usersSyr.json -n 9999      #users
+nohup python stream_geolocation.py  -l 36.0394,32.718,37.6129,33.812,35.8746,34.71,41.0999,35.7866,36.6779,34.502,41.2097,36.6728 -j locationSyria -n 9999
+
+
+
+
+#convert to text
+python json2text.py -i Json_Syria -o Txt_Syria
+python json2text.py -i Json_Jordan -o Txt_Jordan
+python json2text.py -i Json_Palestine -o Txt_Palestine
+python json2text.py -i Json_Lebanon -o Txt_Lebanon     
+
+
+
+
+
+
+
+
+
