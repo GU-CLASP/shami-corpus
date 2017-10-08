@@ -1,15 +1,16 @@
+import argparse
 import sys
+
 import tweepy
 from tweepy import OAuthHandler
 from tweepy import Stream
-import argparse
+
 import api_keys
 from my_listener import MyListener
 
-parser = argparse.ArgumentParser(description='collect tweets based on geographic location')
-parser.add_argument('-l', '--geo-locations', type=str,
-                    help='geo location coordinates from http://boundingbox.klokantech.com '
-                         'copy and past using csv option',
+parser = argparse.ArgumentParser(description='collect tweets based on following twitter users')
+parser.add_argument('-u', '--users', type=argparse.FileType(mode='r', encoding='utf-8'),
+                    help='twitter user ids file. Get ids from tweeterid.com',
                     required=True)
 parser.add_argument('-j', '--json', type=str,
                     help='the the json output file.', required=True)
@@ -28,18 +29,17 @@ def login():
     return auth, api
 
 
-def get_tweets(my_locations, outfile, stop_num):
+def get_tweets(users, outfile, stop_num):
     auth, api = login()
     twitter_stream = Stream(auth, MyListener(outfile, stop_num))
-    # Bounding boxes for geo-locations
-    # http://boundingbox.klokantech.com/
-    # Online-Tool to create boxes (c+p as raw CSV):
-    twitter_stream.filter(locations=my_locations, async=True)
+    twitter_stream.filter(follow=users, async=True)
 
 
 if __name__ == '__main__':
     args = parser.parse_args()
-    my_locations = [float(x) for x in args.geo_locations.split(',')]
+    users = args.users.readlines()
     stopAtNumber = args.number
     outfile = args.json
-    get_tweets(my_locations, outfile, stopAtNumber)
+    get_tweets(users, outfile, stopAtNumber)
+
+
